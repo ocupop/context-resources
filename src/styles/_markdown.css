@@ -105,7 +105,8 @@
   margin-block: 1.5rem;
   padding: 1rem;
 }
-.markdown-text p > code, // Uses the > syntax to avoid targeting <code> elements inside of <pre> elements, which would represent a whole code block instead of an inline piece of code
+/* Uses the > syntax to avoid targeting <code> elements inside of <pre> elements, which would represent a whole code block instead of an inline piece of code */
+.markdown-text p > code,
 .markdown-text li > code {
   background-color: #f2f2f2;
   color: inherit;
@@ -121,3 +122,4 @@
 figure figcaption {
   text-align: center;
 }
+

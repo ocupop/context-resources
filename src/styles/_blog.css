@@ -1,4 +1,4 @@
-// Index page styles
+/* Index page styles */
 .blog-index {
   max-width: var(--pageContainer);
   padding-inline: var(--pagePadding);
@@ -70,7 +70,7 @@
   }
 }
 
-// Pagination styles
+/* Pagination styles */
 .pagination {
   display: flex;
   align-items: center;
@@ -101,7 +101,7 @@
   fill: #034ad8;
 }
 
-// Individual post styles
+/* Individual post styles */
 .post-container {
   max-width: min(72ch, var(--pageContainer));
   padding-inline: var(--pagePadding);
@@ -185,3 +185,4 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
