@@ -1,0 +1,36 @@
+# sdg-application Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2025-11-07
+
+## Active Technologies
+- TypeScript 5.7.2, Node.js (via Next.js 15.5.6) (002-bulk-supplier-import)
+- Supabase PostgreSQL (existing supplier table via `createSupplier` function) (002-bulk-supplier-import)
+- Supabase PostgreSQL (auth.users table + custom profiles table), Supabase Storage for avatars (003-supabase-auth)
+- TypeScript 5.7.2, Node.js 18+ + Next.js 15.5.6, React 19.0.0, Zod 3.24.4, Supabase (PostgreSQL), React Hook Form 7.54.1 (001-supplier-maturity-questionnaire)
+- Supabase PostgreSQL with JSONB columns for questionnaire definitions, responses, and scoring rules (001-supplier-maturity-questionnaire)
+
+- TypeScript 5.7.2, Node.js 18+ + Next.js 15.5.6, React 19.0.0, @tanstack/react-table 8.21.2, zod 3.24.4, nuqs 2.4.1 (001-supplier-index)
+
+## Project Structure
+
+```text
+src/
+tests/
+```
+
+## Commands
+
+npm test && npm run lint
+
+## Code Style
+
+TypeScript 5.7.2, Node.js 18+: Follow standard conventions
+
+## Recent Changes
+- 001-supplier-maturity-questionnaire: Added TypeScript 5.7.2, Node.js 18+ + Next.js 15.5.6, React 19.0.0, Zod 3.24.4, Supabase (PostgreSQL), React Hook Form 7.54.1
+- 003-supabase-auth: Added TypeScript 5.7.2, Node.js 18+
+- 002-bulk-supplier-import: Added TypeScript 5.7.2, Node.js (via Next.js 15.5.6)
+
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->
