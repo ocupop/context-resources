@@ -1,36 +1,38 @@
 ---
 import { footer } from "../../../data/navigation.json";
-import Icon from "../utility/Icon";
+import OcupopLogo from "../logos/OcupopLogo";
 const linkHoverColor = footer.hover_text_color;
+
+// Handle logo config - support both new config object and legacy image path
+const logoConfig = footer.logo;
+const useComponent = logoConfig && typeof logoConfig === 'object' && 'layout' in logoConfig;
 ---
 
 <footer
   style={`background-color: ${footer.background_color}; color: ${footer.text_color};`}>
   <div class="px-8">
     <div
-      class="footer grid grid-cols-1 sm:grid-cols-3 justify-between items-center gap-8 py-[48px]">
+      class="footer grid grid-cols-1 sm:grid-cols-2 justify-between items-center gap-8 py-[48px]">
       <a
         class="flex justify-center sm:justify-start items-center"
         href={footer.logo_url}>
-        <img
-          class="footer__logo-image"
-          src={footer.logo}
-          alt={footer.logo_alt_text}
-        />
+        {useComponent ? (
+          <OcupopLogo
+            client:load
+            layout={(logoConfig.layout as "default" | "wordmark" | "logo") || "default"}
+            fill={logoConfig.fill || "#ffffff"}
+            width={logoConfig.width || 200}
+            className="footer__logo-image"
+            {...({ "aria-label": footer.logo_alt_text } as any)}
+          />
+        ) : (
+          <img
+            class="footer__logo-image"
+            src={typeof footer.logo === 'string' ? footer.logo : '/images/logos/ocupop-wordmark.svg'}
+            alt={footer.logo_alt_text}
+          />
+        )}
       </a>
-      <ul class="flex gap-4 items-center justify-center">
-        {
-          footer.social.map((link) => {
-            return (
-              <li class="w-[2rem]">
-                <a href={link.link} aria-label={link.name}>
-                  <Icon icon={link.icon} />
-                </a>
-              </li>
-            );
-          })
-        }
-      </ul>
 
       <ul class="footer-links flex flex-col text-center sm:text-end gap-4">
         {

@@ -1,15 +1,19 @@
 ---
 import { header } from "../../../data/navigation.json";
 import Icon from "../utility/Icon";
+import OcupopLogo from "../logos/OcupopLogo";
 
 interface Props {
   headerStyleOverrides: {
     background_color: string;
     text_color: string;
     hover_text_color: string;
-    alternate_logo: {
-      image_path: string;
-      logo_alt_text: string;
+    alternate_logo?: {
+      layout?: string;
+      fill?: string;
+      width?: number;
+      image_path?: string; // Legacy support
+      logo_alt_text?: string;
     };
   };
 }
@@ -22,10 +26,18 @@ const backgroundColor =
 const linkTextColor = headerStyleOverrides?.text_color ?? header.text_color;
 const linkHoverColor =
   headerStyleOverrides?.hover_text_color ?? header.hover_text_color;
-const logoImagePath =
-  headerStyleOverrides?.alternate_logo?.image_path ?? header.logo;
+
+// Handle logo config - support both new config object and legacy image_path
+const alternateLogo = headerStyleOverrides?.alternate_logo;
+const logoConfig = alternateLogo?.image_path 
+  ? null // Legacy image path - will use img tag fallback
+  : (alternateLogo || header.logo);
 const logoAltText =
   headerStyleOverrides?.alternate_logo?.logo_alt_text ?? header.logo_alt_text;
+
+// Determine if we should use the component or fallback to img tag
+// Use component if logoConfig is an object (new format) and not a legacy image_path
+const useComponent = logoConfig && typeof logoConfig === 'object' && 'layout' in logoConfig;
 ---
 
 <header
@@ -36,7 +48,18 @@ const logoAltText =
   <div class="header__container">
     <nav class="header__nav">
       <a class="header__logo-link" href={header.logo_url}>
-        <img class="header__logo-image" src={logoImagePath} alt={logoAltText} />
+        {useComponent ? (
+          <OcupopLogo
+            client:load
+            layout={(logoConfig.layout as "default" | "wordmark" | "logo") || "default"}
+            fill={logoConfig.fill || "#393939"}
+            width={logoConfig.width || 200}
+            className="header__logo-image"
+            {...({ "aria-label": logoAltText } as any)}
+          />
+        ) : (
+          <img class="header__logo-image" src={alternateLogo?.image_path || (typeof header.logo === 'string' ? header.logo : '/images/logos/ocupop-wordmark.svg')} alt={logoAltText} />
+        )}
       </a>
 
       <!-- Mobile menu -->

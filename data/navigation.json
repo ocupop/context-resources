@@ -1,7 +1,11 @@
 {
   "header": {
-    "logo": "/images/logos/logo-wordmark-blue.png",
-    "logo_alt_text": "CloudCannon logo",
+    "logo": {
+      "layout": "default",
+      "fill": "#393939",
+      "width": 200
+    },
+    "logo_alt_text": "Ocupop logo",
     "logo_url": "/",
     "background_color": "#ffffff",
     "text_color": "#393939",
@@ -14,8 +18,12 @@
     ]
   },
   "footer": {
-    "logo": "/images/logos/logo-wordmark-white.png",
-    "logo_alt_text": "CloudCannon logo",
+    "logo": {
+      "layout": "wordmark",
+      "fill": "#ffffff",
+      "width": 200
+    },
+    "logo_alt_text": "Ocupop logo",
     "logo_url": "/",
     "copyright": "MyCompany. All rights reserved.",
     "background_color": "#333232",
@@ -25,10 +33,6 @@
       {
         "link": "/personas/",
         "text": "Personas"
-      },
-      {
-        "link": "/feed.xml",
-        "text": "RSS Feed"
       }
     ],
     "social": [
