@@ -1,6 +1,6 @@
 {
   "header": {
-    "logo": "/images/logos/logo-wordmark-blue.png",
+    "logo": "#1F2528",
     "logo_alt_text": "CloudCannon logo",
     "logo_url": "/",
     "background_color": "#ffffff",
@@ -22,7 +22,7 @@
     ]
   },
   "footer": {
-    "logo": "/images/logos/logo-wordmark-white.png",
+    "logo": "#ffffff",
     "logo_alt_text": "CloudCannon logo",
     "logo_url": "/",
     "copyright": "MyCompany. All rights reserved.",

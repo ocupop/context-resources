@@ -5,7 +5,7 @@
 
 # Core Identity
 title:  # e.g., "Senior Data Engineer"
-name:   # e.g., "Alex Martinez"
+full_name:   # e.g., "Alex Martinez"
 status: Active  # Active, Draft, Archived
 
 # Context & Purpose

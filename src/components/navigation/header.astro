@@ -1,6 +1,7 @@
 ---
 import { header } from "../../../data/navigation.json";
 import Icon from "../utility/Icon";
+import OcupopLogoWordmark from "../logos/OcupopLogoWordmark";
 
 interface Props {
   headerStyleOverrides: {
@@ -22,10 +23,8 @@ const backgroundColor =
 const linkTextColor = headerStyleOverrides?.text_color ?? header.text_color;
 const linkHoverColor =
   headerStyleOverrides?.hover_text_color ?? header.hover_text_color;
-const logoImagePath =
+const logoFillColor =
   headerStyleOverrides?.alternate_logo?.image_path ?? header.logo;
-const logoAltText =
-  headerStyleOverrides?.alternate_logo?.logo_alt_text ?? header.logo_alt_text;
 ---
 
 <header
@@ -36,7 +35,7 @@ const logoAltText =
   <div class="header__container">
     <nav class="header__nav">
       <a class="header__logo-link" href={header.logo_url}>
-        <img class="header__logo-image" src={logoImagePath} alt={logoAltText} />
+        <OcupopLogoWordmark client:load class="header__logo-image" fill={logoFillColor} width={200} />
       </a>
 
       <!-- Mobile menu -->

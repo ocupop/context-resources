@@ -1,6 +1,7 @@
 ---
 import { footer } from "../../../data/navigation.json";
 import Icon from "../utility/Icon";
+import OcupopLogoWordmark from "../logos/OcupopLogoWordmark";
 const linkHoverColor = footer.hover_text_color;
 ---
 
@@ -12,11 +13,7 @@ const linkHoverColor = footer.hover_text_color;
       <a
         class="flex justify-center sm:justify-start items-center"
         href={footer.logo_url}>
-        <img
-          class="footer__logo-image"
-          src={footer.logo}
-          alt={footer.logo_alt_text}
-        />
+        <OcupopLogoWordmark client:load class="footer__logo-image" fill={footer.logo} width={200} />
       </a>
       <ul class="flex gap-4 items-center justify-center">
         {

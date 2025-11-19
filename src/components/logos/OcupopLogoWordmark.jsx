@@ -1,8 +1,12 @@
-export default function OcupopLogoWordmark({ fill = "white", ...props }) {
+export default function OcupopLogoWordmark({ fill = "white", width, ...props }) {
+  // Natural aspect ratio: 699/183 ≈ 3.819
+  const aspectRatio = 699 / 183;
+  const calculatedHeight = width ? width / aspectRatio : undefined;
+
   return (
     <svg
-      width="699"
-      height="183"
+      width={width || "699"}
+      height={calculatedHeight || "183"}
       viewBox="0 0 699 183"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
