@@ -2,13 +2,13 @@ import { defineCollection, z } from "astro:content";
 
 const seoSchema = z
   .object({
-    page_description: z.string().nullable(),
-    canonical_url: z.string().nullable(),
-    featured_image: z.string().nullable(),
-    featured_image_alt: z.string().nullable(),
-    author_twitter_handle: z.string().nullable(),
-    open_graph_type: z.string().nullable(),
-    no_index: z.boolean(),
+    page_description: z.string().nullable().optional(),
+    canonical_url: z.string().nullable().optional(),
+    featured_image: z.string().nullable().optional(),
+    featured_image_alt: z.string().nullable().optional(),
+    author_twitter_handle: z.string().nullable().optional(),
+    open_graph_type: z.string().nullable().optional(),
+    no_index: z.boolean().optional(),
   })
   .optional();
 
@@ -109,11 +109,11 @@ const personasCollection = defineCollection({
     quotes: z.any().optional(),
     research: z.any().optional(),
     notes: z.string().optional(),
-    created: z.string().optional(),
-    last_updated: z.string().optional(),
+    created: z.union([z.string(), z.date()]).optional(),
+    last_updated: z.union([z.string(), z.date()]).optional(),
     created_by: z.string().optional(),
     reviewed_by: z.string().optional(),
-    next_review: z.string().optional(),
+    next_review: z.union([z.string(), z.date()]).optional(),
     tags: z.array(z.string()).optional(),
     categories: z.array(z.string()).optional(),
     related_personas: z.array(z.string()).optional(),
