@@ -8,16 +8,8 @@
     "hover_text_color": "#808080",
     "links": [
       {
-        "link": "/blog/",
-        "text": "Blog"
-      },
-      {
-        "link": "https://github.com/CloudCannon/astro-starter/",
-        "text": "GitHub"
-      },
-      {
-        "link": "https://cloudcannon.com/",
-        "text": "CloudCannon"
+        "link": "/personas/",
+        "text": "Personas"
       }
     ]
   },
@@ -31,8 +23,8 @@
     "hover_text_color": "#F2F2F2",
     "links": [
       {
-        "link": "/blog/",
-        "text": "Blog"
+        "link": "/personas/",
+        "text": "Personas"
       },
       {
         "link": "/feed.xml",
