@@ -1,0 +1,14 @@
+h1, .h1 {
+  @apply font-serif;
+  @apply text-5xl md:text-6xl;
+}
+
+h2, .h2 {
+  @apply font-sans;
+  @apply text-xl md:text-2xl;
+}
+
+p, .p {
+  @apply font-serif;
+  @apply text-2xl md:text-3xl;
+}

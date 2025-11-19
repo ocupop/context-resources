@@ -2,31 +2,10 @@
 @import "_blog.css";
 @import "_markdown.css";
 
+
+@import "./base.css";
+@import "./typography.css";
+@import "./theme.css";
+
 @source "../**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
-
-@theme {
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-family: Poppins, sans-serif;
-}
-
-main {
-  min-height: 100vh;
-}
-
-img {
-  object-fit: cover;
-}
 
