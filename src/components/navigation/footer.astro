@@ -46,11 +46,6 @@ const useComponent = logoConfig && typeof logoConfig === 'object' && 'layout' in
         }
       </ul>
     </div>
-
-    <p class="text-center py-8">
-      &#169; {new Date().getFullYear()}
-      {footer.copyright}
-    </p>
   </div>
 </footer>
 
@@ -58,6 +53,7 @@ const useComponent = logoConfig && typeof logoConfig === 'object' && 'layout' in
   .footer {
     max-width: var(--pageContainer);
     margin: 0 auto;
+    padding: 2rem;
   }
   .footer__logo-image {
     display: block;
