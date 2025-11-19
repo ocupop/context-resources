@@ -10,6 +10,53 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
+  
+  /* Brand Colors - from brand.md */
+  --color-primary: #70D9E5;
+  --color-secondary: #FF6D39;
+  --color-accent: #FFB4E6;
+  --color-light: #F8F7F5;
+  --color-dark: #1F2528;
+  --color-alabaster: #E8E1D8;
+  --color-success: #15A620;
+  --color-warning: #F7CD1E;
+  --color-info: #00AAFF;
+  
+  /* Mid Gray Scale - from brand.md */
+  --color-mid-100: #EFF3F7;
+  --color-mid-200: #DCE1E6;
+  --color-mid-300: #C3C7CB;
+  --color-mid-400: #9DA0A4;
+  --color-mid-500: #7B7E80;
+  --color-mid-600: #67696B;
+  --color-mid-700: #494949;
+  --color-mid-800: #303132;
+  --color-mid-900: #1D1D1F;
+  
+  /* Typography - from brand.md */
+  --font-primary: "commuters-sans", system-ui, sans-serif;
+  --font-serif: "Berlingske Serif Regular", serif;
+  
+  /* Type Scale - from brand.md */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18.4px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 28.8px;
+  --text-4xl: 68px;
+  
+  /* Spacing Scale - 8px base unit - from brand.md */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-12: 96px;
+  --space-20: 160px;
 }
 
 * {
@@ -19,7 +66,7 @@
 }
 
 html {
-  font-family: Poppins, sans-serif;
+  font-family: "commuters-sans", system-ui, sans-serif;
 }
 
 main {
@@ -28,5 +75,17 @@ main {
 
 img {
   object-fit: cover;
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 

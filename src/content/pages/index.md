@@ -37,7 +37,7 @@ hero_block:
       button_text: GitHub
       button_icon: GitHub
       button_link: https://github.com/CloudCannon/astro-starter/
-      background_color: '#034AD8'
+      background_color: '#70D9E5'
       hover_brightness: 0.85
       text_color: '#ffffff'
       button_aria_label:
@@ -45,10 +45,10 @@ hero_block:
       button_text: CloudCannon
       button_icon: CloudCannon
       button_link: https://www.cloudcannon.com
-      text_color: '#034AD8'
+      text_color: '#70D9E5'
       hover_brightness: 0.85
       button_aria_label:
-      background_color: '#034ad8'
+      background_color: '#70D9E5'
 content_blocks:
   - _bookshop_name: left-right
     background_color: '#ffffff'
@@ -130,7 +130,7 @@ content_blocks:
       button_text: GitHub
       button_icon: GitHub
       button_link: https://github.com/CloudCannon/astro-starter/
-      background_color: '#034AD8'
+      background_color: '#70D9E5'
       hover_brightness: 0.85
       text_color: '#ffffff'
       button_aria_label:

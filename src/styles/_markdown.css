@@ -82,14 +82,14 @@
 }
 .markdown-text th,
 .markdown-text td {
-  border: 1px solid #f2f2f2;
+  border: 1px solid #DCE1E6;
   padding: 0.5rem;
 }
 .markdown-text table caption {
-  background-color: #f2f2f2;
+  background-color: #EFF3F7;
 }
 .markdown-text table thead {
-  background-color: #f2f2f2;
+  background-color: #EFF3F7;
 }
 .markdown-text img {
   max-width: 100%;
@@ -108,7 +108,7 @@
 /* Uses the > syntax to avoid targeting <code> elements inside of <pre> elements, which would represent a whole code block instead of an inline piece of code */
 .markdown-text p > code,
 .markdown-text li > code {
-  background-color: #f2f2f2;
+  background-color: #EFF3F7;
   color: inherit;
   padding: 0.25rem 0.5rem;
   border-radius: 8px;

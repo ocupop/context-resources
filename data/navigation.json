@@ -28,7 +28,7 @@
     "copyright": "MyCompany. All rights reserved.",
     "background_color": "#333232",
     "text_color": "#ffffff",
-    "hover_text_color": "#F2F2F2",
+    "hover_text_color": "#EFF3F7",
     "links": [
       {
         "link": "/blog/",
