@@ -388,8 +388,8 @@ categories:
   - backend
   - artificial-intelligence
 related_personas:
-  - Remington
-  - Alex
+  - Remington Schaab
+  - Alex Patel
 
 seo:
   page_description: AI system persona representing the automated scoring engine for the SDG Supplier Assessment Tool.

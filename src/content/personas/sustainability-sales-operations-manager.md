@@ -412,7 +412,7 @@ categories:
   - supplier-portal
 related_personas:
   - Linda & Marco
-  - Remington
+  - Remington Schaab
 
 seo:
   page_description: Supplier-facing persona for the SDG Supplier Assessment Tool
