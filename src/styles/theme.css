@@ -1,10 +1,11 @@
 @theme {
-  --font-sans: "Commuters Sans", sans-serif;
-  --font-serif: "Berlingske Serif", sans-serif;
+  --font-sans: "commuters-sans", sans-serif;
+  --font-serif: "Berlingske Serif Regular", sans-serif;
 }
 @theme {
   --color-cream: #E7E0D7;
   --color-light-cream: #F8F7F5;
+  --color-aqua: #70D9E5;
   --color-orange: #FF6D39;
   --color-pink: #F7B5ED;
   --color-lime: #D1C700;
@@ -14,11 +15,16 @@
   --color-dark-gray: #494949;
   --color-light-gray: #D6D6D6;
 
-  --color-primary: var(--color-pink);
+  --color-primary: var(--color-aqua);
   --color-accent: var(--color-orange);
   --color-dark: var(--color-dark-steel);
   --color-light: var(--color-light-cream);
   --color-mid: var(--color-dark-gray);
+
+
+  --color-error: var(--color-orange);
+  --color-warning: var(--color-lime);
+  --color-success: var(--color-green);
 }
 @theme {
   --breakpoint-sm: 640px;
