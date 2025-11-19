@@ -1,0 +1,446 @@
+---
+import Layout from "./Layout.astro";
+import PersonaSummary from "../components/personas/summary.astro";
+import { getCollection } from "astro:content";
+
+type Props = {
+  frontmatter: any;
+  body?: string;
+};
+
+const { frontmatter, body } = Astro.props;
+
+const personas = await getCollection("personas");
+const filteredPersonas = personas.filter(
+  (persona) => persona.data.title !== frontmatter.title
+);
+
+// Helper function to render object/array data
+function renderField(label: string, value: any): string {
+  if (!value) return '';
+  
+  if (typeof value === 'string') {
+    return value;
+  }
+  
+  if (Array.isArray(value)) {
+    if (value.length === 0) return '';
+    return value.map(v => typeof v === 'string' ? v : JSON.stringify(v)).join(', ');
+  }
+  
+  if (typeof value === 'object') {
+    return JSON.stringify(value, null, 2);
+  }
+  
+  return String(value);
+}
+
+function renderSection(title: string, data: any): string {
+  if (!data || (typeof data === 'object' && Object.keys(data).length === 0)) {
+    return '';
+  }
+  
+  let html = `<section class="persona-section">
+    <h2 class="persona-section-title">${title}</h2>
+    <div class="persona-section-content">`;
+  
+  if (typeof data === 'object' && !Array.isArray(data)) {
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== null && value !== undefined && value !== '') {
+        const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        html += `<div class="persona-field">
+          <dt class="persona-field-label">${formattedKey}</dt>
+          <dd class="persona-field-value">${renderField(key, value)}</dd>
+        </div>`;
+      }
+    }
+  } else {
+    html += `<div class="persona-field-value">${renderField('', data)}</div>`;
+  }
+  
+  html += `</div></section>`;
+  return html;
+}
+---
+
+<Layout {...frontmatter}>
+  <div class="persona-container">
+    <article class="persona-article">
+      <header class="persona-header">
+        <div class="persona-header-meta">
+          {frontmatter.status && (
+            <span class={`persona-status-badge persona-status-${frontmatter.status.toLowerCase()}`}>
+              {frontmatter.status}
+            </span>
+          )}
+          {frontmatter.priority && (
+            <span class={`persona-priority-badge persona-priority-${frontmatter.priority.toLowerCase()}`}>
+              {frontmatter.priority} Priority
+            </span>
+          )}
+          {frontmatter.persona_type && (
+            <span class="persona-type-badge">
+              {frontmatter.persona_type.replace(/_/g, ' ')}
+            </span>
+          )}
+        </div>
+        <h1 class="persona-title">{frontmatter.title}</h1>
+        {frontmatter.name && (
+          <p class="persona-name">{frontmatter.name}</p>
+        )}
+        {frontmatter.context && (
+          <p class="persona-context">{frontmatter.context}</p>
+        )}
+      </header>
+
+      <div class="persona-content" data-cms-edit="content" data-pagefind-body>
+        {body && (
+          <div class="persona-body markdown-text">
+            <slot />
+          </div>
+        )}
+
+        {frontmatter.demographics && (
+          <section class="persona-section">
+            <h2 class="persona-section-title">Demographics</h2>
+            <dl class="persona-section-content">
+              {Object.entries(frontmatter.demographics).map(([key, value]) => {
+                if (value === null || value === undefined || value === '') return null;
+                const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+                return (
+                  <div class="persona-field">
+                    <dt class="persona-field-label">{formattedKey}</dt>
+                    <dd class="persona-field-value">{String(value)}</dd>
+                  </div>
+                );
+              })}
+            </dl>
+          </section>
+        )}
+
+        {frontmatter.characteristics && (
+          <section class="persona-section">
+            <h2 class="persona-section-title">Characteristics</h2>
+            <dl class="persona-section-content">
+              {Object.entries(frontmatter.characteristics).map(([key, value]) => {
+                if (value === null || value === undefined || value === '') return null;
+                const formattedKey = key.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+                return (
+                  <div class="persona-field">
+                    <dt class="persona-field-label">{formattedKey}</dt>
+                    <dd class="persona-field-value">{String(value)}</dd>
+                  </div>
+                );
+              })}
+            </dl>
+          </section>
+        )}
+
+        {frontmatter.goals && (
+          <section class="persona-section">
+            <h2 class="persona-section-title">Goals</h2>
+            <div class="persona-section-content">
+              {frontmatter.goals.primary && Array.isArray(frontmatter.goals.primary) && (
+                <div class="persona-goals-primary">
+                  <h3>Primary Goals</h3>
+                  <ul>
+                    {frontmatter.goals.primary.map((goal: any) => (
+                      <li>
+                        {goal.description && <p>{goal.description}</p>}
+                        {goal.timeframe && <span class="persona-meta">Timeframe: {goal.timeframe}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {frontmatter.goals.secondary && Array.isArray(frontmatter.goals.secondary) && (
+                <div class="persona-goals-secondary">
+                  <h3>Secondary Goals</h3>
+                  <ul>
+                    {frontmatter.goals.secondary.map((goal: any) => (
+                      <li>
+                        {goal.description && <p>{goal.description}</p>}
+                        {goal.importance && <span class="persona-meta">Importance: {goal.importance}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        {frontmatter.pain_points && Array.isArray(frontmatter.pain_points) && frontmatter.pain_points.length > 0 && (
+          <section class="persona-section">
+            <h2 class="persona-section-title">Pain Points</h2>
+            <ul class="persona-section-content">
+              {frontmatter.pain_points.map((pain: any) => (
+                <li class="persona-pain-point">
+                  {pain.issue && <p><strong>{pain.issue}</strong></p>}
+                  {pain.frequency && <span class="persona-meta">Frequency: {pain.frequency}</span>}
+                  {pain.severity && <span class="persona-meta">Severity: {pain.severity}</span>}
+                  {pain.current_workaround && <p>Workaround: {pain.current_workaround}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {frontmatter.jobs_to_be_done && Array.isArray(frontmatter.jobs_to_be_done) && frontmatter.jobs_to_be_done.length > 0 && (
+          <section class="persona-section">
+            <h2 class="persona-section-title">Jobs to Be Done</h2>
+            <ul class="persona-section-content">
+              {frontmatter.jobs_to_be_done.map((job: any) => (
+                <li class="persona-job">
+                  {job.when && <p><strong>When:</strong> {job.when}</p>}
+                  {job.i_want_to && <p><strong>I want to:</strong> {job.i_want_to}</p>}
+                  {job.so_i_can && <p><strong>So I can:</strong> {job.so_i_can}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {frontmatter.values && Array.isArray(frontmatter.values) && frontmatter.values.length > 0 && (
+          <section class="persona-section">
+            <h2 class="persona-section-title">Values</h2>
+            <ul class="persona-section-content persona-values-list">
+              {frontmatter.values.map((value: string) => (
+                <li>{value}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {frontmatter.notes && (
+          <section class="persona-section">
+            <h2 class="persona-section-title">Notes</h2>
+            <div class="persona-section-content markdown-text">
+              <p>{frontmatter.notes}</p>
+            </div>
+          </section>
+        )}
+      </div>
+    </article>
+  </div>
+
+  {filteredPersonas.length > 0 && (
+    <section class="persona-related">
+      <h2 class="persona-related-heading">Other Personas</h2>
+      <div class="persona-related-list">
+        {filteredPersonas.slice(0, 3).map((persona) => (
+          <PersonaSummary {...persona} loading="lazy" />
+        ))}
+      </div>
+    </section>
+  )}
+</Layout>
+
+<style>
+  .persona-container {
+    max-width: var(--pageContainer);
+    margin: 0 auto;
+    padding: var(--sectionPaddingMobile) var(--pagePadding);
+  }
+
+  .persona-article {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .persona-header {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #e5e7eb;
+  }
+
+  .persona-header-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .persona-status-badge,
+  .persona-priority-badge,
+  .persona-type-badge {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .persona-status-active {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  .persona-status-draft {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  .persona-status-archived {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+
+  .persona-priority-high {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+
+  .persona-priority-medium {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  .persona-priority-low {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+
+  .persona-type-badge {
+    background-color: #ede9fe;
+    color: #5b21b6;
+    text-transform: capitalize;
+  }
+
+  .persona-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: #111827;
+  }
+
+  .persona-name {
+    font-size: 1.25rem;
+    color: #6b7280;
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+  }
+
+  .persona-context {
+    font-size: 1rem;
+    color: #9ca3af;
+    margin: 0;
+  }
+
+  .persona-content {
+    line-height: 1.75;
+  }
+
+  .persona-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: #f9fafb;
+    border-radius: 8px;
+  }
+
+  .persona-section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: #111827;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+
+  .persona-section-content {
+    margin: 0;
+  }
+
+  .persona-field {
+    margin: 1rem 0;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+  }
+
+  .persona-field-label {
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .persona-field-value {
+    color: #6b7280;
+  }
+
+  .persona-meta {
+    display: inline-block;
+    margin-right: 1rem;
+    font-size: 0.875rem;
+    color: #9ca3af;
+  }
+
+  .persona-pain-point,
+  .persona-job {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: white;
+    border-radius: 4px;
+    border-left: 4px solid #3b82f6;
+  }
+
+  .persona-values-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .persona-values-list li {
+    padding: 0.5rem 1rem;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .persona-related {
+    max-width: var(--pageContainer);
+    margin: 3rem auto 0;
+    padding: 0 var(--pagePadding);
+  }
+
+  .persona-related-heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .persona-related-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .persona-container {
+      padding: var(--sectionPaddingMobile) var(--pagePadding);
+    }
+
+    .persona-article {
+      padding: 1.5rem;
+    }
+
+    .persona-title {
+      font-size: 2rem;
+    }
+
+    .persona-field {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .persona-related-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

@@ -1,0 +1,23 @@
+---
+import PersonaSummary from "./summary.astro";
+const { personas } = Astro.props;
+---
+
+<div class="persona-grid">
+  {personas.map((persona, i) => <PersonaSummary {...persona} key={i} loading="eager" />)}
+</div>
+
+<style>
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .persona-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+

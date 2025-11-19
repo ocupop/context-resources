@@ -126,6 +126,58 @@ collections_config:
         options:
           values: data.tags
           empty_type: array
+  personas:
+    path: src/content/personas
+    glob:
+      - '**/*.md'
+    url: '/personas/[full_slug]/'
+    icon: person
+    preview:
+      text:
+        - key: title
+        - key: name
+      metadata:
+        - icon: person
+          text:
+            - template: '{name}'
+            - No name
+        - icon: badge
+          text:
+            - template: '{persona_type}'
+            - No type
+        - icon: flag
+          text:
+            - template: '{status}'
+            - No status
+    _enabled_editors:
+      - content
+    add_options:
+      - name: Add New Persona
+        schema: default
+        icon: person_add
+        editor: content
+    schemas:
+      default:
+        path: '.cloudcannon/schemas/persona.md'
+    create:
+      path: '[relative_base_path]/{filename|slugify|lowercase}.md'
+    _inputs:
+      title:
+        comment: Controls the metadata title, and the title used when linking to this persona elsewhere on the site.
+        options:
+          empty_type: string
+      name:
+        comment: The persona's name (e.g., "Alex Martinez").
+        options:
+          empty_type: string
+      status:
+        comment: Current status of the persona (Active, Draft, Archived).
+        options:
+          empty_type: string
+      persona_type:
+        comment: Type of persona (primary_user, secondary_user, stakeholder, decision_maker, influencer).
+        options:
+          empty_type: string
   data:
     path: data
     disable_add: true
@@ -138,6 +190,7 @@ collection_groups:
     collections:
       - pages
       - blog
+      - personas
   - heading: Data
     collections:
       - data

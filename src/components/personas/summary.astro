@@ -1,0 +1,149 @@
+---
+const { data, slug, loading } = Astro.props;
+
+const { title, name, status, persona_type, priority, demographics } = data;
+
+const statusClass = status?.toLowerCase() || 'draft';
+const priorityClass = priority?.toLowerCase() || 'medium';
+---
+
+<div class="persona-summary-card">
+  <div class="persona-summary-header">
+    {status && (
+      <span class={`persona-status persona-status-${statusClass}`}>
+        {status}
+      </span>
+    )}
+    {priority && (
+      <span class={`persona-priority persona-priority-${priorityClass}`}>
+        {priority}
+      </span>
+    )}
+  </div>
+  <a href={`/personas/${slug}`} class="persona-summary-link">
+    <h2 class="persona-summary-title">
+      {title}
+    </h2>
+    {name && (
+      <p class="persona-summary-name">{name}</p>
+    )}
+    {persona_type && (
+      <p class="persona-summary-type">{persona_type.replace(/_/g, ' ')}</p>
+    )}
+    {demographics && (
+      <div class="persona-summary-demographics">
+        {demographics.role && (
+          <span class="persona-demo-item">{demographics.role}</span>
+        )}
+        {demographics.department && (
+          <span class="persona-demo-item">{demographics.department}</span>
+        )}
+      </div>
+    )}
+  </a>
+</div>
+
+<style>
+  .persona-summary-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+    background: white;
+  }
+
+  .persona-summary-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+
+  .persona-summary-header {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .persona-status,
+  .persona-priority {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .persona-status-active {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  .persona-status-draft {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  .persona-status-archived {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+
+  .persona-priority-high {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+
+  .persona-priority-medium {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  .persona-priority-low {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+
+  .persona-summary-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .persona-summary-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #111827;
+  }
+
+  .persona-summary-name {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+  }
+
+  .persona-summary-type {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin: 0 0 1rem 0;
+    text-transform: capitalize;
+  }
+
+  .persona-summary-demographics {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.75rem;
+  }
+
+  .persona-demo-item {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #f3f4f6;
+    border-radius: 4px;
+    color: #4b5563;
+  }
+</style>
+

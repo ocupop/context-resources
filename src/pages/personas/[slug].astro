@@ -1,0 +1,25 @@
+---
+import PersonaLayout from "../../layouts/Persona.astro";
+import { getCollection, getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const personas = await getCollection("personas");
+  return personas.map((persona) => ({ params: { slug: persona.slug } }));
+}
+
+if (!Astro.params.slug) {
+  throw new Error("Persona slug is undefined");
+}
+
+const persona = await getEntry("personas", Astro.params.slug);
+if (!persona) {
+  throw new Error("Failed to get persona with slug: " + Astro.params.slug);
+}
+
+const { Content } = await persona.render();
+---
+
+<PersonaLayout frontmatter={persona.data} body={persona.body}>
+  <Content />
+</PersonaLayout>
+

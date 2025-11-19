@@ -1,0 +1,100 @@
+---
+import type { Page } from "astro";
+import PersonaList from "../../components/personas/list.astro";
+import PersonaPagination from "../../components/personas/pagination";
+import type { Props as LayoutProps } from "../../layouts/Layout.astro";
+import Layout from "../../layouts/Paginated.astro";
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+
+type Props = {
+  page: Page<CollectionEntry<"personas">>;
+};
+
+export async function getStaticPaths({ paginate }: { paginate: Function }) {
+  const personas = await getCollection("personas");
+  const page = await getEntry("pages", "personas");
+  
+  // Sort by priority (high, medium, low) and then by title
+  personas.sort((a, b) => {
+    const priorityOrder: Record<string, number> = { high: 3, medium: 2, low: 1 };
+    const aPriority = priorityOrder[a.data.priority?.toLowerCase() || 'medium'] || 2;
+    const bPriority = priorityOrder[b.data.priority?.toLowerCase() || 'medium'] || 2;
+    
+    if (aPriority !== bPriority) {
+      return bPriority - aPriority;
+    }
+    
+    return a.data.title.localeCompare(b.data.title);
+  });
+  
+  if (!page) {
+    // If no personas page entry exists, use default pagination
+    return paginate(personas, {
+      pageSize: 12,
+    });
+  }
+  
+  return paginate(personas, {
+    pageSize: "page_size" in page.data ? page.data.page_size : 12,
+  });
+}
+
+const page = await getEntry("pages", "personas");
+const frontmatter = page?.data as LayoutProps;
+const pagination = Astro.props.page;
+const { data: personas } = pagination;
+
+// If no page entry exists, create a default frontmatter
+const defaultFrontmatter: LayoutProps = {
+  title: "Personas",
+  seo: {
+    page_description: "User personas for design and development",
+    canonical_url: null,
+    featured_image: null,
+    featured_image_alt: null,
+    open_graph_type: null,
+    no_index: false,
+    author_twitter_handle: null,
+  },
+};
+
+const pageData = frontmatter || defaultFrontmatter;
+---
+
+<Layout frontmatter={pageData}>
+  <div class="personas-index">
+    <h1 class="personas-index-heading">
+      {pageData.title}
+    </h1>
+    <section>
+      <PersonaList personas={personas} />
+      <PersonaPagination pagination={pagination} />
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .personas-index {
+    max-width: var(--pageContainer);
+    margin: 0 auto;
+    padding: var(--sectionPaddingMobile) var(--pagePadding);
+  }
+
+  .personas-index-heading {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .personas-index {
+      padding: var(--sectionPadding) var(--pagePadding);
+    }
+
+    .personas-index-heading {
+      font-size: 3rem;
+    }
+  }
+</style>
+
