@@ -4,7 +4,7 @@
 # ============================================
 
 title: Sustainability Manager (First Sustainability Hire)
-full_name: Emma Rodriguez
+name: Emma Rodriguez
 status: Active
 persona_type: primary_user
 context: Early-stage sustainability maturity, first-time platform user

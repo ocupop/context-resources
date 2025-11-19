@@ -4,7 +4,7 @@
 # ============================================
 
 title: Senior Procurement Manager  
-full_name: Michael Chen  
+name: Michael Chen  
 status: Active  
 
 persona_type: primary_user  
