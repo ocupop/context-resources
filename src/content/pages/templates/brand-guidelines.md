@@ -9,12 +9,12 @@ seo:
   open_graph_type:
   no_index: false
 ---
-# [Project Name] Brand Guidelines
+# [Client Name] Brand Guidelines
 
 **Status**: 🔄 Draft | ✅ Active  
 **Last Updated**: YYYY-MM-DD  
 **Version**: 1.0  
-**Extends**: docs/design/principles.md
+**Extends**: docs/design/design-principles.md
 
 > Copy this template to `docs/design/brand.md` and customize for each project
 

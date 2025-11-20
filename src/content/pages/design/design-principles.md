@@ -9,7 +9,7 @@ seo:
   open_graph_type:
   no_index: false
 ---
-# Context Resources Design Checklist
+# [Project Name] Design Checklist
 
 ## I. Core Design Philosophy & Strategy
 
