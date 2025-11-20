@@ -1,6 +1,6 @@
 ---
 _schema: default
-title: CloudCannon Astro Starter
+title: SDG Context
 seo:
   page_description: >-
     A starting point for developers looking to build a website with Astro, using
@@ -15,14 +15,13 @@ hero_block:
   _bookshop_name: heroes/hero
   background_color: '#ffffff'
   heading:
-    heading_text: CloudCannon Astro Starter
-    heading_gradient_color: '#A0A2FF'
+    heading_text: SDG Context & Resources
+    heading_gradient_color: '#000000'
     text_color: '#333232'
   subheading:
     text_content: >-
-      A starting point for developers looking to build a website with Astro,
-      using Bookshop components in CloudCannon. Create your own copy, and start
-      creating your own components to use in CloudCannon’s CMS.
+      A solid point of reference for continued development of the supplier
+      assessment platform.
     color: '#393939'
     text_color: '#333232'
   image:
@@ -36,8 +35,8 @@ hero_block:
     - _bookshop_name: buttons/primary
       button_text: GitHub
       button_icon: GitHub
-      button_link: https://github.com/CloudCannon/astro-starter/
-      background_color: '#034AD8'
+      button_link: https://github.com/ocupop/sdg-application
+      background_color: '#FF785A'
       hover_brightness: 0.85
       text_color: '#ffffff'
       button_aria_label:
