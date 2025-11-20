@@ -1,5 +1,6 @@
 ---
 import PageLayout from "../layouts/Page.astro";
+import PageMarkdownLayout from "../layouts/PageMarkdown.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 export interface Props {
@@ -17,6 +18,25 @@ export async function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+const { Content } = await page.render();
+
+// Determine layout based on schema or page structure
+// Check if page has _schema field (CloudCannon schema identifier)
+// or infer from page structure (markdown pages don't have hero_block or content_blocks)
+const pageData = page.data as any;
+const schema = pageData._schema;
+// Use markdown layout if explicitly set to page-markdown schema
+// OR if it's a simple page with only title and seo (no hero_block, content_blocks, or page_size)
+const isMarkdownPage = schema === "page-markdown" || 
+  (schema !== "paginated" && 
+   !("hero_block" in pageData) && 
+   !("content_blocks" in pageData) && 
+   !("page_size" in pageData) &&
+   Object.keys(pageData).filter(k => k !== "title" && k !== "seo" && k !== "_schema").length === 0);
+
+const LayoutComponent = isMarkdownPage ? PageMarkdownLayout : PageLayout;
 ---
 
-<PageLayout frontmatter={page.data} />
+<LayoutComponent frontmatter={page.data}>
+  <Content />
+</LayoutComponent>

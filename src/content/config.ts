@@ -6,7 +6,6 @@ const seoSchema = z
     canonical_url: z.string().nullable().optional(),
     featured_image: z.string().nullable().optional(),
     featured_image_alt: z.string().nullable().optional(),
-    author_twitter_handle: z.string().nullable().optional(),
     open_graph_type: z.string().nullable().optional(),
     no_index: z.boolean().optional(),
   })
@@ -36,6 +35,11 @@ const pageSchema = z.object({
   seo: seoSchema,
 });
 
+const pageMarkdownSchema = z.object({
+  title: z.string(),
+  seo: seoSchema,
+});
+
 const paginatedCollectionSchema = z.object({
   title: z.string(),
   page_size: z.number().positive(),
@@ -43,7 +47,7 @@ const paginatedCollectionSchema = z.object({
 });
 
 const pagesCollection = defineCollection({
-  schema: z.union([paginatedCollectionSchema, pageSchema]),
+  schema: z.union([paginatedCollectionSchema, pageSchema, pageMarkdownSchema]),
 });
 
 const personasCollection = defineCollection({

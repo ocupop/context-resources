@@ -18,4 +18,9 @@ const props = Astro.props.frontmatter;
 <Layout {...props}>
   <HeroBlock bookshop:live heroBlock={props.hero_block} />
   <PageHelper bookshop:live contentBlocks={props.content_blocks} />
+  {Astro.slots.has("default") && (
+    <div class="markdown-text" data-cms-edit="content" data-pagefind-body>
+      <slot />
+    </div>
+  )}
 </Layout>

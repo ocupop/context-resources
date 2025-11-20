@@ -13,7 +13,6 @@ export interface SEOProps {
   canonical_url: string | null;
   no_index: boolean | null;
   open_graph_type: string | null;
-  author_twitter_handle: string | null;
 }
 
 export interface Props {
@@ -110,7 +109,6 @@ const headerStyleOverrides = hero_block?.header_style_overrides ?? {};
         },
       }}
       twitter={{
-        creator: `${seo?.author_twitter_handle || site.twitter_site}`,
         site: `${site.twitter_site}`,
         card: "summary_large_image",
       }}

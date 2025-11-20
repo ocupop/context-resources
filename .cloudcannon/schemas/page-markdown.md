@@ -7,5 +7,5 @@ seo:
   featured_image_alt:
   open_graph_type:
   no_index: false
-page_size: 6
 ---
+

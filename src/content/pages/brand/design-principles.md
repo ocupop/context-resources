@@ -1,5 +1,5 @@
 ---
-_schema: default
+_schema: page-markdown
 title: Design Principles
 seo:
   page_description:

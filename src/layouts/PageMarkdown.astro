@@ -1,0 +1,35 @@
+---
+import Layout, { type SEOProps } from "./Layout.astro";
+
+type Props = {
+  frontmatter: {
+    title: string;
+    seo?: SEOProps;
+  };
+};
+
+const props = Astro.props.frontmatter;
+---
+
+<Layout {...props}>
+  <article class="markdown-page">
+    <div class="markdown-text" data-cms-edit="content" data-pagefind-body>
+      <slot />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .markdown-page {
+    max-width: 72ch;
+    margin: 0 auto;
+    padding: var(--sectionPadding) var(--pagePadding);
+  }
+
+  @media (max-width: 768px) {
+    .markdown-page {
+      padding: var(--sectionPaddingMobile) var(--pagePadding);
+    }
+  }
+</style>
+

@@ -23,6 +23,9 @@ collections_config:
       - name: Add New Page
         schema: default
         icon: pages
+      - name: Add Markdown Resource
+        schema: page-markdown
+        icon: description
     schemas:
       default:
         name: New Page
@@ -31,6 +34,10 @@ collections_config:
       paginated:
         name: Paginated collection
         path: '.cloudcannon/schemas/paginated.md'
+        remove_extra_inputs: false
+      page-markdown:
+        name: Markdown Page
+        path: '.cloudcannon/schemas/page-markdown.md'
         remove_extra_inputs: false
     create:
       path: '[relative_base_path]/{filename|slugify|lowercase}.md'
@@ -473,8 +480,6 @@ _inputs:
         - website
         - article
     comment: Defaults to the type 'website'.
-  author_twitter_handle:
-    comment: Defaults to the twitter site value set in the Site SEO data file.
   twitter_site:
     type: url
   no_index:
