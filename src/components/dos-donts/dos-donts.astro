@@ -1,0 +1,84 @@
+---
+import Markdown from "../utility/markdown.astro";
+
+interface Props {
+  key: number;
+  heading?: {
+    heading_text: string;
+  };
+  dos: Array<{
+    text_content: string;
+  }>;
+  donts: Array<{
+    text_content: string;
+  }>;
+}
+
+const {
+  key,
+  heading,
+  dos,
+  donts,
+} = Astro.props;
+---
+
+<section
+  id="do"
+  class="dos-donts w-full"
+  style="background-color: var(--color-light);"
+  aria-labelledby={heading ? `dos-donts-${key}-heading` : undefined}>
+  <div class="container mx-auto">
+    {heading && (
+      <h2 id={`dos-donts-${key}-heading`}>
+        {heading.heading_text}
+      </h2>
+    )}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+      <div>
+        <h3 class="dos-heading">DO</h3>
+        <ul class="list-none space-y-6">
+          {dos.map((item) => (
+            <li>
+              <Markdown content={item.text_content} />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 class="donts-heading">DO NOT</h3>
+        <ul class="list-none space-y-6">
+          {donts.map((item) => (
+            <li>
+              <Markdown content={item.text_content} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @reference "../../styles/main.css";
+
+  .dos-heading {
+    @apply text-success;
+  }
+
+  .donts-heading {
+    @apply text-error;
+  }
+
+  .dos-donts li .markdown-text {
+    @apply leading-[1.6];
+  }
+
+  .dos-donts li .markdown-text p {
+    @apply m-0;
+  }
+
+  .dos-donts li .markdown-text strong {
+    @apply font-bold;
+  }
+</style>
+

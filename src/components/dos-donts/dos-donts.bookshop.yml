@@ -1,0 +1,61 @@
+# Metadata about this component, to be used in the CMS
+spec:
+  structures:
+    - content_blocks
+  label: Dos & Don'ts
+  description: Two-column layout showing DO and DO NOT guidelines
+  icon: 'compare_arrows'
+  tags:
+    - Text
+    - Guidelines
+    - Two Column
+
+# Defines the structure of this component, as well as the default values
+blueprint:
+  heading:
+    heading_text: Dos & Don'ts
+  dos:
+    - text_content: >-
+        **Network connectivity** is described as the most accurate, expansive,
+        and clear way to describe what 7SIGNAL does. It notes that
+        **Connectivity** alone is accurate but may lack specificity for some
+        businesses.
+  donts:
+    - text_content: >-
+        Do not anchor too heavily on "**Wi-Fi**" or "**network**" as these terms
+        are too narrow. However, it notes that these terms may be resonant for
+        certain audiences and appropriate in specific contexts, so they don't need
+        to be avoided entirely.
+
+# Overrides any fields in the blueprint when viewing this component in the component browser
+preview:
+
+# Any extra CloudCannon inputs configuration to apply to the blueprint
+_inputs:
+  heading:
+    type: object
+    options:
+      preview:
+        icon: 'short_text'
+        text:
+          - key: heading_text
+          - Heading
+  dos:
+    type: array
+    options:
+      preview:
+        icon: 'check_circle'
+        text:
+          - DO
+        subtext:
+          - 'Add DO guidelines'
+  donts:
+    type: array
+    options:
+      preview:
+        icon: 'cancel'
+        text:
+          - DO NOT
+        subtext:
+          - 'Add DO NOT guidelines'
+
