@@ -125,8 +125,16 @@ const personasCollection = defineCollection({
   }),
 });
 
+const templatesCollection = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    seo: seoSchema,
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
   pages: pagesCollection,
   personas: personasCollection,
+  templates: templatesCollection,
 };

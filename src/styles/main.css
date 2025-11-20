@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "_blog.css";
 @import "_markdown.css";
+@import "_templates.css";
 
 @source "../**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
 

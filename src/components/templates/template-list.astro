@@ -1,0 +1,97 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  templates: CollectionEntry<"templates">[];
+  layout?: "grid" | "list";
+  showMetadata?: boolean;
+}
+
+const { templates, layout = "list", showMetadata = true } = Astro.props;
+---
+
+<ul class={`template-list template-list-${layout}`} role="list">
+  {templates.map((template) => (
+    <li>
+      <a href={`/templates/${template.slug}`}>
+        <h2>{template.data.title}</h2>
+        {showMetadata && template.data.seo?.page_description && (
+          <p class="template-description">{template.data.seo.page_description}</p>
+        )}
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .template-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .template-list-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .template-list-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .template-list li {
+    margin: 0;
+  }
+
+  .template-list a {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #24292f;
+    transition: all 0.2s ease;
+    height: 100%;
+  }
+
+  .template-list a:hover {
+    background: #f6f8fa;
+    border-color: #0969da;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .template-list a:focus {
+    outline: 2px solid #0969da;
+    outline-offset: 2px;
+  }
+
+  .template-list h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #0969da;
+  }
+
+  .template-description {
+    font-size: 0.875rem;
+    color: #656d76;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .template-list-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .template-list a {
+      padding: 1rem;
+    }
+    
+    .template-list h2 {
+      font-size: 1rem;
+    }
+  }
+</style>
+

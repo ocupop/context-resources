@@ -1,0 +1,52 @@
+---
+import { codeToHtml } from 'shiki';
+
+interface Props {
+  content: string;
+  language: string;
+  highlightedHtml?: string;
+  showLineNumbers?: boolean;
+  maxHeight?: string;
+}
+
+const { content, language, highlightedHtml, showLineNumbers = false, maxHeight } = Astro.props;
+
+// Highlight code if not already highlighted
+let html = highlightedHtml;
+if (!html) {
+  html = await codeToHtml(content, {
+    lang: language,
+    theme: 'github-light',
+  });
+}
+
+const style = maxHeight ? `max-height: ${maxHeight}; overflow-y: auto;` : '';
+---
+
+<div class="code-viewer" style={style}>
+  <div class="code-container">
+    <Fragment set:html={html} />
+  </div>
+</div>
+
+<style>
+  .code-viewer {
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .code-container :global(pre) {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: 8px;
+  }
+  
+  .code-container :global(code) {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+</style>
+

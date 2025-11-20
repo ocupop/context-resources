@@ -1,0 +1,114 @@
+---
+interface Props {
+  content: string;
+  label?: string;
+  successMessage?: string;
+  errorMessage?: string;
+  ariaLabel?: string;
+}
+
+const { 
+  content, 
+  label = "Copy", 
+  successMessage = "Copied!", 
+  errorMessage = "Failed to copy",
+  ariaLabel = "Copy template code to clipboard"
+} = Astro.props;
+---
+
+<button
+  type="button"
+  class="copy-button"
+  x-data=`{
+    copied: false,
+    copying: false,
+    error: false,
+    content: ${JSON.stringify(content)},
+    label: ${JSON.stringify(label)},
+    successMessage: ${JSON.stringify(successMessage)},
+    errorMessage: ${JSON.stringify(errorMessage)},
+    async copyToClipboard() {
+      this.copying = true;
+      this.error = false;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(this.content);
+          this.copied = true;
+          setTimeout(() => { this.copied = false; }, 2000);
+        } else {
+          // Fallback for older browsers or non-HTTPS contexts
+          const textarea = document.createElement('textarea');
+          textarea.value = this.content;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+          this.copied = true;
+          setTimeout(() => { this.copied = false; }, 2000);
+        }
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        this.error = true;
+        setTimeout(() => { this.error = false; }, 2000);
+      } finally {
+        this.copying = false;
+      }
+    }
+  }`
+  x-on:click="copyToClipboard()"
+  x-bind:class="{ 'copied': copied, 'error': error }"
+  x-bind:disabled="copying"
+  x-text="error ? errorMessage : (copied ? successMessage : label)"
+  aria-label={ariaLabel}
+>
+  {label}
+</button>
+
+<style>
+  .copy-button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #24292f;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-width: 100px;
+  }
+
+  .copy-button:hover:not(:disabled) {
+    background: #f6f8fa;
+    border-color: #1f883d;
+  }
+
+  .copy-button:focus {
+    outline: 2px solid #0969da;
+    outline-offset: 2px;
+  }
+
+  .copy-button:active:not(:disabled) {
+    background: #e7eaed;
+  }
+
+  .copy-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .copy-button.copied {
+    background: #dafbe1;
+    border-color: #1f883d;
+    color: #1f883d;
+  }
+
+  .copy-button.error {
+    background: #ffebe9;
+    border-color: #d1242f;
+    color: #d1242f;
+  }
+</style>
+

@@ -185,6 +185,31 @@ collections_config:
         comment: Type of persona (primary_user, secondary_user, stakeholder, decision_maker, influencer).
         options:
           empty_type: string
+  templates:
+    path: src/content/templates
+    glob:
+      - '**/*.md'
+    url: '/templates/[full_slug]/'
+    icon: description
+    _enabled_editors:
+      - visual
+      - content
+    add_options:
+      - name: Add New Template
+        schema: default
+        icon: note_add
+        editor: content
+    schemas:
+      default:
+        name: Template
+        path: '.cloudcannon/schemas/template.md'
+        remove_extra_inputs: false
+    create:
+      path: '[relative_base_path]/{filename|slugify|lowercase}.md'
+    _inputs:
+      title:
+        type: text
+        comment: Template title
   data:
     path: data
     disable_add: true
@@ -198,6 +223,7 @@ collection_groups:
       - pages
       - blog
       - personas
+      - templates
   - heading: Data
     collections:
       - data

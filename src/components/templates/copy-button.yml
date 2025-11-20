@@ -1,0 +1,24 @@
+component_name: TemplatesCopyButton
+preview:
+  text: Copy Button
+  icon: content_copy
+definitions:
+  component_name: TemplatesCopyButton
+  named_args:
+    - editor_key: label
+      type: string
+    - editor_key: success_message
+      type: string
+    - editor_key: error_message
+      type: string
+_inputs:
+  label:
+    type: text
+    comment: Button label
+  success_message:
+    type: text
+    comment: Success feedback message
+  error_message:
+    type: text
+    comment: Error feedback message
+

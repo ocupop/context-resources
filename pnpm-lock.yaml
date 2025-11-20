@@ -93,6 +93,9 @@ importers:
       markdown-it:
         specifier: ^13.0.1
         version: 13.0.2
+      shiki:
+        specifier: ^3.15.0
+        version: 3.15.0
 
 packages:
 
