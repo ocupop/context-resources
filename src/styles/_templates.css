@@ -1,0 +1,258 @@
+/* Templates Collection Styles */
+
+/* Design Tokens from data/colors.json */
+:root {
+  --template-bg-primary: #ffffff;
+  --template-bg-secondary: #F2F2F2;
+  --template-bg-code: #f6f8fa;
+  --template-border: #d0d7de;
+  --template-text-primary: #333232;
+  --template-text-secondary: #808080;
+  --template-link: #034AD8;
+  --template-link-hover: #034AD8;
+  --template-success-bg: #C8D5B9;
+  --template-success-text: #1f883d;
+  --template-error-bg: #FF785A;
+  --template-error-text: #d1242f;
+  --template-focus: #034AD8;
+  --template-shadow: rgba(0, 0, 0, 0.1);
+}
+
+.template-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.template-actions {
+  margin: 1rem 0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Code Viewer Styles */
+.code-viewer {
+  background: var(--template-bg-code);
+  border: 1px solid var(--template-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.code-viewer pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  background: transparent;
+}
+
+.code-viewer code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Copy Button Styles (for Phase 4) */
+.copy-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--template-border);
+  border-radius: 6px;
+  background: var(--template-bg-primary);
+  color: var(--template-text-primary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  min-width: 44px;
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+.copy-button:hover {
+  background: var(--template-bg-secondary);
+  border-color: var(--template-success-text);
+}
+
+.copy-button:focus {
+  outline: 2px solid var(--template-focus);
+  outline-offset: 2px;
+}
+
+.copy-button:active {
+  background: var(--template-bg-secondary);
+  transform: scale(0.98);
+}
+
+.copy-button.copied {
+  background: var(--template-success-bg);
+  border-color: var(--template-success-text);
+  color: var(--template-success-text);
+}
+
+.copy-button.error {
+  background: var(--template-error-bg);
+  border-color: var(--template-error-text);
+  color: var(--template-bg-primary);
+}
+
+/* Templates Index Styles (for Phase 5) */
+.templates-index {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.templates-index h1 {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--template-text-primary);
+}
+
+.template-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.template-list li {
+  margin: 0;
+}
+
+.template-list a {
+  display: block;
+  padding: 1rem;
+  border: 1px solid var(--template-border);
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--template-text-primary);
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+
+.template-list a:hover {
+  background: var(--template-bg-secondary);
+  border-color: var(--template-link-hover);
+  box-shadow: 0 4px 8px var(--template-shadow);
+}
+
+.template-list a:focus {
+  outline: 2px solid var(--template-focus);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .code-viewer {
+    border-radius: 6px;
+  }
+
+  .code-viewer pre {
+    padding: 0.875rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .code-viewer code {
+    font-size: 0.75rem;
+  }
+  
+  .template-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .copy-button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+
+  .template-list {
+    gap: 0.75rem;
+  }
+
+  .template-list a {
+    padding: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .template-page {
+    padding: 1rem 0.5rem;
+  }
+
+  .code-viewer {
+    border-radius: 4px;
+    margin: 1rem -0.5rem;
+  }
+
+  .code-viewer pre {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .templates-index {
+    padding: 1rem 0.5rem;
+  }
+  
+  .templates-index h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .template-actions {
+    margin: 0.75rem 0;
+  }
+
+  .copy-button {
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .code-viewer {
+    border-width: 2px;
+  }
+
+  .copy-button {
+    border-width: 2px;
+  }
+
+  .template-list a {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .copy-button,
+  .template-list a {
+    transition: none;
+  }
+
+  .copy-button:active {
+    transform: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .copy-button {
+    display: none;
+  }
+
+  .template-actions {
+    display: none;
+  }
+
+  .code-viewer {
+    border: 1px solid #000;
+    page-break-inside: avoid;
+  }
+}
+

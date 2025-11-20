@@ -1,0 +1,29 @@
+# context-resources Development Guidelines
+
+Auto-generated from all feature plans. Last updated: 2025-11-20
+
+## Active Technologies
+
+- TypeScript/JavaScript (Astro 5.1.10, React 18.2.0) + Astro, React, Tailwind CSS 4.1.17, Alpine.js 3.14.8, markdown-it 13.0.1 (001-templates-code-viewer)
+
+## Project Structure
+
+```text
+src/
+tests/
+```
+
+## Commands
+
+npm test && npm run lint
+
+## Code Style
+
+TypeScript/JavaScript (Astro 5.1.10, React 18.2.0): Follow standard conventions
+
+## Recent Changes
+
+- 001-templates-code-viewer: Added TypeScript/JavaScript (Astro 5.1.10, React 18.2.0) + Astro, React, Tailwind CSS 4.1.17, Alpine.js 3.14.8, markdown-it 13.0.1
+
+<!-- MANUAL ADDITIONS START -->
+<!-- MANUAL ADDITIONS END -->

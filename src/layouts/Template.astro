@@ -1,0 +1,341 @@
+---
+import Layout, { type SEOProps } from "./Layout.astro";
+import CodeViewer from "../components/templates/code-viewer.astro";
+import CopyButton from "../components/templates/copy-button.astro";
+import { codeToHtml } from 'shiki';
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  frontmatter: {
+    title: string;
+    seo?: SEOProps;
+  };
+  template: CollectionEntry<"templates">;
+}
+
+const { frontmatter, template } = Astro.props;
+
+// Render markdown content for preview
+const { Content } = await template.render();
+
+// Extract file extension from slug for language detection
+const fileExtension = template.slug.split('.').pop() || 'md';
+const languageMap: Record<string, string> = {
+  'md': 'markdown',
+  'yml': 'yaml',
+  'yaml': 'yaml',
+  'json': 'json',
+  'txt': 'plaintext',
+};
+const language = languageMap[fileExtension] || 'markdown';
+
+// Error handling for template processing
+let bodyContent = '';
+let highlightedContent = '';
+let processingError: string | null = null;
+
+try {
+  // Extract body content (without frontmatter) for both display and copying
+  bodyContent = template.body || '';
+
+  // Only highlight if there's actual content
+  if (bodyContent.trim().length > 0) {
+    highlightedContent = await codeToHtml(bodyContent, {
+      lang: language,
+      theme: 'github-light',
+    });
+  } else {
+    // For empty content, create a simple pre/code block
+    highlightedContent = '<pre class="empty-template"><code>(Empty template)</code></pre>';
+  }
+} catch (error) {
+  processingError = error instanceof Error ? error.message : 'Unknown error occurred while processing template';
+  console.error('Template processing error:', error);
+  
+  // Fallback: show raw content without highlighting
+  try {
+    bodyContent = template.body || '';
+  } catch (fallbackError) {
+    bodyContent = 'Error: Unable to load template content.';
+  }
+}
+---
+
+<Layout {...frontmatter}>
+  <article class="template-page" x-data="{ viewMode: 'code' }">
+    <h1>{frontmatter.title}</h1>
+    
+    {processingError && (
+      <div class="template-error" role="alert">
+        <h2>⚠️ Template Processing Error</h2>
+        <p>There was an issue processing this template's frontmatter or content:</p>
+        <pre>{processingError}</pre>
+        <p>The template content is displayed below without syntax highlighting.</p>
+      </div>
+    )}
+    
+    <div class="template-actions">
+      <CopyButton content={bodyContent} />
+      
+      <div class="view-toggle" role="group" aria-label="View mode toggle">
+        <button
+          type="button"
+          class="toggle-button"
+          x-bind:class="{ 'active': viewMode === 'code' }"
+          x-on:click="viewMode = 'code'"
+          aria-label="Show code view"
+        >
+          Code
+        </button>
+        <button
+          type="button"
+          class="toggle-button"
+          x-bind:class="{ 'active': viewMode === 'preview' }"
+          x-on:click="viewMode = 'preview'"
+          aria-label="Show preview"
+        >
+          Preview
+        </button>
+      </div>
+    </div>
+    
+    {processingError ? (
+      <div class="code-viewer">
+        <pre><code>{bodyContent}</code></pre>
+      </div>
+    ) : (
+      <>
+        <div x-show="viewMode === 'code'" x-cloak>
+          <CodeViewer content={bodyContent} language={language} highlightedHtml={highlightedContent} />
+        </div>
+        <div x-show="viewMode === 'preview'" x-cloak class="markdown-preview">
+          <Content />
+        </div>
+      </>
+    )}
+  </article>
+</Layout>
+
+<style>
+  .template-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--sectionPadding, 2rem) var(--pagePadding, 1rem);
+  }
+  
+  .template-page h1 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+  
+  .template-actions {
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .view-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--template-border, #d0d7de);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .toggle-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: var(--template-bg-primary, #ffffff);
+    color: var(--template-text-primary, #24292f);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-width: 80px;
+  }
+  
+  .toggle-button:first-child {
+    border-right: 1px solid var(--template-border, #d0d7de);
+  }
+  
+  .toggle-button:hover:not(.active) {
+    background: var(--template-bg-secondary, #F2F2F2);
+  }
+  
+  .toggle-button:focus {
+    outline: 2px solid var(--template-focus, #034AD8);
+    outline-offset: -2px;
+    z-index: 1;
+  }
+  
+  .toggle-button.active {
+    background: var(--template-link, #034AD8);
+    color: var(--template-bg-primary, #ffffff);
+  }
+  
+  .markdown-preview {
+    background: var(--template-bg-primary, #ffffff);
+    border: 1px solid var(--template-border, #d0d7de);
+    border-radius: 8px;
+    padding: 2rem;
+    line-height: 1.7;
+  }
+  
+  .markdown-preview :global(h1),
+  .markdown-preview :global(h2),
+  .markdown-preview :global(h3),
+  .markdown-preview :global(h4),
+  .markdown-preview :global(h5),
+  .markdown-preview :global(h6) {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  
+  .markdown-preview :global(h1) { font-size: 2rem; }
+  .markdown-preview :global(h2) { font-size: 1.5rem; }
+  .markdown-preview :global(h3) { font-size: 1.25rem; }
+  .markdown-preview :global(h4) { font-size: 1.125rem; }
+  
+  .markdown-preview :global(p) {
+    margin-bottom: 1rem;
+  }
+  
+  .markdown-preview :global(ul),
+  .markdown-preview :global(ol) {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+  }
+  
+  .markdown-preview :global(li) {
+    margin-bottom: 0.5rem;
+  }
+  
+  .markdown-preview :global(code) {
+    background: var(--template-bg-secondary, #F2F2F2);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.875em;
+  }
+  
+  .markdown-preview :global(pre) {
+    background: var(--template-bg-code, #f6f8fa);
+    border: 1px solid var(--template-border, #d0d7de);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+  
+  .markdown-preview :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+  
+  .markdown-preview :global(blockquote) {
+    border-left: 4px solid var(--template-link, #034AD8);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: var(--template-text-secondary, #808080);
+  }
+  
+  .markdown-preview :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  
+  .markdown-preview :global(th),
+  .markdown-preview :global(td) {
+    border: 1px solid var(--template-border, #d0d7de);
+    padding: 0.5rem;
+    text-align: left;
+  }
+  
+  .markdown-preview :global(th) {
+    background: var(--template-bg-secondary, #F2F2F2);
+    font-weight: 600;
+  }
+  
+  .markdown-preview :global(hr) {
+    border: none;
+    border-top: 1px solid var(--template-border, #d0d7de);
+    margin: 2rem 0;
+  }
+  
+  .markdown-preview :global(a) {
+    color: var(--template-link, #034AD8);
+    text-decoration: none;
+  }
+  
+  .markdown-preview :global(a:hover) {
+    text-decoration: underline;
+  }
+  
+  [x-cloak] {
+    display: none !important;
+  }
+  
+  .template-error {
+    background: #ffebe9;
+    border: 2px solid #d1242f;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .template-error h2 {
+    color: #d1242f;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .template-error p {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+  
+  .template-error pre {
+    background: #ffffff;
+    border: 1px solid #d1242f;
+    border-radius: 4px;
+    padding: 0.75rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    margin: 0.75rem 0;
+  }
+  
+  @media (max-width: 768px) {
+    .template-page {
+      padding: var(--sectionPaddingMobile, 1rem) var(--pagePadding, 1rem);
+    }
+    
+    .template-page h1 {
+      font-size: 1.5rem;
+    }
+    
+    .template-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .view-toggle {
+      width: 100%;
+    }
+    
+    .toggle-button {
+      flex: 1;
+      min-width: auto;
+    }
+    
+    .markdown-preview {
+      padding: 1rem;
+    }
+  }
+</style>
+

@@ -1,0 +1,19 @@
+component_name: TemplatesCodeViewer
+preview:
+  text: Code Viewer
+  icon: code
+definitions:
+  component_name: TemplatesCodeViewer
+  named_args:
+    - editor_key: show_line_numbers
+      type: boolean
+    - editor_key: max_height
+      type: string
+_inputs:
+  show_line_numbers:
+    type: checkbox
+    comment: Display line numbers
+  max_height:
+    type: text
+    comment: Maximum height (e.g., "500px")
+

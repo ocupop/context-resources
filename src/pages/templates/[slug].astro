@@ -1,0 +1,24 @@
+---
+import TemplateLayout from "../../layouts/Template.astro";
+import { getCollection, getEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const templates = await getCollection("templates");
+  return templates.map((template) => ({
+    params: { slug: template.slug },
+    props: { template },
+  }));
+}
+
+if (!Astro.params.slug) {
+  throw new Error("Template slug is undefined");
+}
+
+const template = await getEntry("templates", Astro.params.slug);
+if (!template) {
+  throw new Error("Failed to get template with slug: " + Astro.params.slug);
+}
+---
+
+<TemplateLayout frontmatter={template.data} template={template} />
+

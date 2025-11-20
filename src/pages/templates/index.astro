@@ -1,0 +1,70 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TemplateList from "../../components/templates/template-list.astro";
+import { getCollection } from "astro:content";
+
+const templates = await getCollection("templates");
+
+// Sort templates alphabetically by title
+templates.sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const frontmatter = {
+  title: "Templates",
+  seo: {
+    page_description: "Browse available design and documentation templates",
+    canonical_url: null,
+    featured_image: null,
+    featured_image_alt: null,
+    open_graph_type: null,
+    no_index: false,
+  },
+};
+---
+
+<Layout {...frontmatter}>
+  <article class="templates-index">
+    <h1>Templates</h1>
+    <p class="templates-intro">
+      Browse our collection of templates for documentation, design, and project planning.
+      Click any template to view its contents and copy it for your own use.
+    </p>
+    <TemplateList templates={templates} />
+  </article>
+</Layout>
+
+<style>
+  .templates-index {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--sectionPadding, 2rem) var(--pagePadding, 1rem);
+  }
+
+  .templates-index h1 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .templates-intro {
+    margin-bottom: 2rem;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #656d76;
+    max-width: 72ch;
+  }
+
+  @media (max-width: 768px) {
+    .templates-index {
+      padding: var(--sectionPaddingMobile, 1rem) var(--pagePadding, 1rem);
+    }
+
+    .templates-index h1 {
+      font-size: 1.5rem;
+    }
+
+    .templates-intro {
+      font-size: 1rem;
+    }
+  }
+</style>
+
