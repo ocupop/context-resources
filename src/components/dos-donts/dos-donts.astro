@@ -23,8 +23,9 @@ const {
 ---
 
 <section
+  id="do"
   class="dos-donts w-full"
-  style="background-color: var(--color-light); color: var(--color-dark, #333232);"
+  style="background-color: var(--color-light);"
   aria-labelledby={heading ? `dos-donts-${key}-heading` : undefined}>
   <div class="container mx-auto">
     {heading && (
@@ -58,24 +59,26 @@ const {
 </section>
 
 <style>
+  @reference "../../styles/main.css";
+
   .dos-heading {
-    color: var(--color-success, #15A620);
+    @apply text-success;
   }
 
   .donts-heading {
-    color: var(--color-error, #FF6D39);
+    @apply text-error;
   }
 
   .dos-donts li .markdown-text {
-    line-height: 1.6;
+    @apply leading-[1.6];
   }
 
   .dos-donts li .markdown-text p {
-    margin: 0;
+    @apply m-0;
   }
 
   .dos-donts li .markdown-text strong {
-    font-weight: 600;
+    @apply font-bold;
   }
 </style>
 

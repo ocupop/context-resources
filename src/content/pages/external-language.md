@@ -66,5 +66,27 @@ content_blocks:
       - text_content: >-
           Do not over-anchor on complexity, as this may intimidate those seeking
           quick, simple solutions.
+  - _bookshop_name: vocabulary
+    heading:
+      heading_text: Vocabulary
+    terms:
+      - vocab: Beyond basic
+        description: Position 7SIGNAL as a more powerful option than others out there
+      - vocab: Critical operations
+        description: Focus on how 7SIGNAL ensures continuity, for example, keeping equipment working in hospitals for better patient outcomes, or ensuring that pickers and scanners keep working in warehouses
+      - vocab: Digital experiences
+        description: As a current trend, "digital experience" is a relevant term to tap into for the time being, but should be qualified
+      - vocab: Identify, resolve, prevent
+        description: Showcase the range of actions enabled by 7SIGNAL to deal with network connectivity issues
+      - vocab: Interruption-free
+        description: Highlight the ideal state
+      - vocab: Network connectivity platform
+        description: This is the most accurate, expansive, and clearly descriptive way of describing what 7SIGNAL is
+      - vocab: Connection quality
+        description: Focus on the quality of the experience users have - making it easier and more pleasant for them to complete tasks, communicate with coworkers, engage with technology, support customers, etc.
+      - vocab: Rapidly & proactively
+        description: Highlight the speed with which potential issues are resolved and addressed
+      - vocab: True view
+        description: A way of highlighting the client-side viewpoint. This is akin to "visibility gap", which may still be used as appropriate, but "true view" is preferable, as it is more positive and evocative
 ---
 

@@ -1,0 +1,92 @@
+---
+import Markdown from "../utility/markdown.astro";
+
+interface Props {
+  key: number;
+  heading?: {
+    heading_text: string;
+  };
+  terms: Array<{
+    vocab: string;
+    description: string;
+  }>;
+}
+
+const {
+  key,
+  heading,
+  terms,
+} = Astro.props;
+---
+
+<section
+  id="vocabulary"
+  class="vocabulary w-full"
+  style="background-color: var(--color-light);"
+  aria-labelledby={heading ? `vocabulary-${key}-heading` : undefined}>
+  <div class="container mx-auto">
+    {heading && (
+      <h2 id={`vocabulary-${key}-heading`}>
+        {heading.heading_text}
+      </h2>
+    )}
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th class="text-left">VOCAB</th>
+          <th class="text-left">DESCRIPTION</th>
+        </tr>
+      </thead>
+      <tbody>
+        {terms.map((term) => (
+          <tr>
+            <td class="font-semibold align-top">
+              {term.vocab}
+            </td>
+            <td>
+              <Markdown content={term.description} />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  @reference "../../styles/main.css";
+
+  .vocabulary table {
+    border-collapse: collapse;
+  }
+
+  .vocabulary th {
+    @apply pb-2;
+    @apply font-bold uppercase;
+    /* @apply border-b border-(--color-mid); */
+    @apply border-b border-mid;
+  }
+
+  .vocabulary td {
+    @apply p-2;
+    /* @apply border-b border-(--color-mid); */
+    @apply border-b border-mid;
+  }
+
+  .vocabulary td:first-child {
+    @apply min-w-[400px];
+  }
+
+  .vocabulary .markdown-text {
+    @apply leading-[1.6];
+  }
+
+  .vocabulary .markdown-text p {
+    @apply m-0;
+  }
+
+  .vocabulary .markdown-text strong {
+    @apply font-bold;
+  }
+</style>
+

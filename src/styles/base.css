@@ -13,7 +13,11 @@ main {
   min-height: 100vh;
 }
 
+section{
+  @apply py-20;
+}
+
 img {
-  object-fit: cover;
+  @apply object-cover;
 }
 
